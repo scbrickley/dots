@@ -1,0 +1,26 @@
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+bind -n M-h select-pane -L
+bind -n M-l select-pane -R
+bind -n M-k select-pane -U
+bind -n M-j select-pane -D
+
+bind \\ split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+bind -r h resize-pane -L 
+bind -r j resize-pane -D 
+bind -r k resize-pane -U
+bind -r l resize-pane -R
+
+set -g mouse on
+set -g status off
+
+set -sg escape-time 0
+
+set -g clock-mode-style 12
+
+set -g default-terminal "screen-256color"
+

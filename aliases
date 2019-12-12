@@ -1,0 +1,8 @@
+alias cls="echo -ne '\033c'"
+alias tks="tmux kill-session"
+alias pipes="pipes.sh -p 10 -r 40000"
+alias spec="cls; neofetch"
+alias specs="cls; neofetch | lolcat -S 35"
+alias cb="xclip -selection clipboard"
+alias v="xclip -o"
+alias lc="lolcat"

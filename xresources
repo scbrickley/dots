@@ -1,8 +1,8 @@
 URxvt.perl-lib: /usr/lib/urxvt/perl
 
-URxvt.font: xft:Iosevka Term: size=10
+URxvt.font: xft:Iosevka Term:pixelsize=10
 URxvt.letterSpace: -4
-!URxvt.skipBuiltinGlyphs: true
+URxvt.skipBuiltinGlyphs: true
 
 URxvt.scrollBar: false
 

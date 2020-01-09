@@ -1,5 +1,5 @@
 rm $HOME/.tmux.conf
-ln -s $(pwd)/tmux_config $HOME/.tmux.conf
+ln -s $(pwd)/tmux_conf $HOME/.tmux.conf
 ls -l $HOME/.tmux.conf
 
 rm -r $HOME/.bin

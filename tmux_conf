@@ -23,4 +23,3 @@ set -sg escape-time 0
 set -g clock-mode-style 12
 
 set -g default-terminal "screen-256color"
-

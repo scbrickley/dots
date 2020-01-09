@@ -1,0 +1,28 @@
+set from="Sean Brickley <sean@wabr.io>
+set my_user="scbrickley@protonmail.com"
+set smtp_url = "smtp://$my_user:`cat $HOME/.pmbridgepw`@127.0.0.1:1025"
+
+set mbox_type = Maildir
+set folder = "~/.mail/"
+set spoolfile = "+INBOX" 
+set record = "+Sent"
+set postponed = "+Drafts"
+set trash = "+Trash"
+set mail_check = 2
+set edit_headers = yes
+set ssl_force_tls
+set ssl_starttls
+
+mailboxes +INBOX +waiting +Sent +Drafts +Trash +Spam +Archive
+
+auto_view text/html
+auto_view text/markdown
+alternative_order text/plain text/enriched text/html
+set implicit_autoview=yes
+
+set editor="vim -c 'set textwidth=0'"
+set alias_file="~/.muttrc.aliases"
+
+macro index,pager \cb "<pipe-message>urlscan<Enter>"
+macro attach,compose \cb "<pipe-entry>urlscan<Enter>"
+macro generic,index G <shell-escape>'offlineimap -o'<enter> 'Run offlineimap'

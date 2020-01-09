@@ -16,3 +16,5 @@ set ttyfast
 set timeoutlen=0 ttimeoutlen=0
 
 set t_Co=16
+
+map C-p <Nop>

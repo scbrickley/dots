@@ -1,0 +1,10 @@
+#!/bin/bash
+
+perc=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | sed s/percentage:// \
+| xargs)
+
+state=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep state | sed s/state:// \
+| xargs)
+
+echo "Battery: $perc" | figlet -f future
+echo $state | figlet -f future

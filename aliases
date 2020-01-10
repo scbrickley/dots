@@ -1,4 +1,3 @@
-alias clear="echo -ne '\033c'"
 alias spec="clear; neofetch"
 alias specs="clear; neofetch | lolcat -S 34"
 alias luna="curl wttr.in/moon"

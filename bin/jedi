@@ -2,7 +2,6 @@
 
 dir=${PWD##*/}
 
-# Copy my GitHub password from KeepassXC to the clipboard, read it into a variable, and clear after 1 second.
 gh_pass() {
 	read -resp $'Tell me your secrets:\n' kpw
 	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 2 &> /dev/null & 
@@ -16,4 +15,20 @@ create_gh() {
 	ghpw=$(gh_pass)
 	curl -X POST https://api.github.com/user/repos -u scbrickley:$ghpw -d "{\"name\": \"$dir\"}" &> /dev/null &
 	unset ghpw
+}
+
+publish_gh() {
+	create_gh
+	git remote add origin git@github.com:scbrickley/"$dir".git
+	git add .
+	git commit -m "Initial commit"
+	git push -u origin master
+}
+
+mirror_gh() {
+	create_gh
+	git remote add ghm git@github.com:scbrickley/"$dir".git
+	git add .
+	git commit -m "GitHub mirror"
+	git push -u ghm master
 }

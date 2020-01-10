@@ -1,3 +1,4 @@
 #!/bin/bash
 
-sed 's/:/\n/g' <<< $PATH
+path=$PATH
+echo $path | sed 's/:/\n/g' | sort | uniq

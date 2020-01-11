@@ -4,7 +4,7 @@ dir=${PWD##*/}
 
 gh_pass() {
 	read -resp $'Tell me your secrets:\n' kpw
-	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 2 &> /dev/null & 
+	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 2 &> /dev/null &
 	sleep 0.5s
 	ghpw=$(xclip -o -selection clipboard)
 	echo $ghpw
@@ -13,13 +13,14 @@ gh_pass() {
 
 create_gh() {
 	ghpw=$(gh_pass)
-	curl -X POST https://api.github.com/user/repos -u scbrickley:$ghpw -d "{\"name\": \"$dir\"}" &> /dev/null &
+	curl -X POST https://api.github.com/user/repos \ 
+		-u scbrickley:$ghpw -d "{\"name\": \"$1\"}" &> /dev/null &
 	unset ghpw
 }
 
 publish_gh() {
 	create_gh
-	git remote add origin git@github.com:scbrickley/"$dir".git
+	git remote add origin git@github.com:scbrickley/"$1".git
 	git add .
 	git commit -m "Initial commit"
 	git push -u origin master
@@ -27,8 +28,107 @@ publish_gh() {
 
 mirror_gh() {
 	create_gh
-	git remote add ghm git@github.com:scbrickley/"$dir".git
+	git remote add ghm git@github.com:scbrickley/"$1".git
 	git add .
 	git commit -m "GitHub mirror"
 	git push -u ghm master
+}	
+
+# Write function that reads from `git remote -v`
+# and detects where repo is already published/mirrored
+is_published() {
+	count=$(git remote -v | grep -c origin)
+	if test $count -le 0
+	then
+		echo 
+	else
+		echo true
+	fi
 }
+
+is_mirrored() {
+	count=$(git remote -v | grep -vc origin)
+	if test $count -gt 0
+	then
+		echo true
+	else
+		echo false
+	fi
+}
+
+is_overloaded() {
+	count=$(git remote -v | grep -c origin)
+	if test $count -gt 2
+	then
+		echo "Working repository is overloaded"
+	else
+		echo false
+	fi
+}
+
+has_gitlab_origin() {
+	count=$(git remote -v | grep origin | grep -c gitlab)
+	if test $count -gt 0
+	then
+		echo true
+	else
+		echo false
+	fi
+}
+
+has_github_origin() {
+	count=$(git remote -v | grep origin | grep -c github)
+	if test $count -gt 0
+	then
+		echo true
+	else
+		echo false
+	fi
+}
+
+list_remotes() {
+	echo "This repository has the following remotes:"
+	cat .git/config | grep url | sed 's/url = //'
+}
+
+
+while getopts ":lobrs:p:m:n:" opt
+do
+	case ${opt} in
+		l )
+			list_remotes
+			;;
+		o )
+			is_overloaded
+			;;
+		b )
+			is_published
+			;;
+		r )
+			is_mirrored
+			;;
+		s )
+			message=$OPTARG
+			;;
+		p )
+			echo "Publish to $OPTARG"
+			# Throw error and exit if origin already exists
+			# OPTARG must be "gitlab", "github", or "all"
+			;;
+		m )
+			echo "Mirror to $OPTARG"
+			# Throw error and exit if not published
+			# Throw error and exit if already mirrored
+			;;
+		n )
+			echo "Name: $OPTARG"
+			# If name is not provided, set name to dir
+			;;
+		\? )
+			echo "Invalid option: $OPTARG" 1>&2
+			;;
+		: )
+			echo "$OPTARG requires an argument" 1>&2
+			;;
+	esac
+done

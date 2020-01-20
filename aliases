@@ -1,3 +1,5 @@
+#!/bin/bash
+
 alias spec="clear; neofetch"
 alias specs="clear; neofetch | lolcat -S 34"
 alias luna="curl wttr.in/moon"
@@ -6,3 +8,7 @@ alias cb="xclip -selection clipboard"
 alias v="xclip -o"
 alias open="xdg-open"
 alias pipes="pipes.sh -p 10 -r 40000"
+alias clock="echo $(date +%r) | figlet -f future"
+alias path="echo $PATH | sed 's/:/\n/g' | sort | uniq"
+alias games="steam &> /dev/null &"
+alias tunes="spotify &> /dev/null &"

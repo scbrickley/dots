@@ -1,7 +1,31 @@
 #!/bin/bash
 
-dir=${PWD##*/}
+########################### Check if there's a .git directory ###########################
+git rev-parse --show-toplevel &> /dev/null
+if [[ $? != 0 ]]
+then
+	echo -ne "This project does not have a .git directory.\n"
+	read -resp $'Would you like to initialize the current directory as a git repo? [y/N]\n' answer
+	if [[ $answer == y || $answer == yes || $answer == Yes ]]
+	then
+		git init
+	else
+		exit 3
+	fi
+fi
 
+########################### Variable Declarations ###########################
+git_root=$(git rev-parse --show-toplevel)
+
+name=${git_root##*/}
+
+origin_service=$(grep -A 1 -m 1 'remote "origin"' $git_root/.git/config | grep url | xargs \
+	| sed 's/url = git@//g' | grep -o 'git.\{3\}')
+
+upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url | xargs | sed 's/url = //g')
+
+
+########################### Function Declarations ###########################
 gh_pass() {
 	read -resp $'Tell me your secrets:\n' kpw
 	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 2 &> /dev/null &
@@ -13,116 +37,108 @@ gh_pass() {
 
 create_gh() {
 	ghpw=$(gh_pass)
-	curl -X POST https://api.github.com/user/repos \ 
-		-u scbrickley:$ghpw -d "{\"name\": \"$1\"}" &> /dev/null &
+	curl -X POST https://api.github.com/user/repos -u scbrickley:$ghpw -d "{\"name\": \"$name\"}" &> /dev/null
 	unset ghpw
 }
 
-publish_gh() {
-	create_gh
-	git remote add origin git@github.com:scbrickley/"$1".git
+
+publish() {
+	if [[ $1 == github ]]
+	then
+		create_gh
+	fi
+	git remote add origin git@"$1".com:scbrickley/"$name".git
 	git add .
 	git commit -m "Initial commit"
 	git push -u origin master
 }
 
-mirror_gh() {
+mirror() {
 	create_gh
-	git remote add ghm git@github.com:scbrickley/"$1".git
+	git remote add ghm git@github.com:scbrickley/"$name".git
 	git add .
-	git commit -m "GitHub mirror"
-	git push -u ghm master
+	git commit -m "Mirror to $mirror_service"
+	git push -u mirror master
 }	
 
-# Write function that reads from `git remote -v`
-# and detects where repo is already published/mirrored
 is_published() {
 	count=$(git remote -v | grep -c origin)
-	if test $count -le 0
-	then
-		echo 
-	else
-		echo true
-	fi
-}
-
-is_mirrored() {
-	count=$(git remote -v | grep -vc origin)
-	if test $count -gt 0
-	then
-		echo true
-	else
-		echo false
-	fi
-}
-
-is_overloaded() {
-	count=$(git remote -v | grep -c origin)
-	if test $count -gt 2
-	then
-		echo "Working repository is overloaded"
-	else
-		echo false
-	fi
-}
-
-has_gitlab_origin() {
-	count=$(git remote -v | grep origin | grep -c gitlab)
-	if test $count -gt 0
-	then
-		echo true
-	else
-		echo false
-	fi
-}
-
-has_github_origin() {
-	count=$(git remote -v | grep origin | grep -c github)
-	if test $count -gt 0
-	then
-		echo true
-	else
-		echo false
-	fi
+	[[ $count -gt 0 ]]
 }
 
 list_remotes() {
 	echo "This repository has the following remotes:"
-	cat .git/config | grep url | sed 's/url = //'
+	remotes=$(git remote -v)
+	lines='\n\t'
+	IFS=$'\n'
+	for line in $remotes
+	do
+		lines+=${line% \(*}
+		lines+='\n\t'
+	done
+	lines=$(echo -e $lines | uniq)
+	for line in $lines
+	do
+		echo $line
+	done
+}
+
+has_upstream() {
+	count=$(git remote -v | grep -c upstream)
+	[[ $count -gt 0 ]]
 }
 
 
-while getopts ":lobrs:p:m:n:" opt
+########################### Argument parsing ###########################
+while getopts ":lubs:p:m:" opt
 do
 	case ${opt} in
 		l )
 			list_remotes
 			;;
-		o )
-			is_overloaded
-			;;
 		b )
 			is_published
+			if [[ $? == 0 ]]
+			then
+				echo This repo is published to $origin_service
+			else
+				echo This repo is not published yet
+			fi
 			;;
-		r )
-			is_mirrored
+		u )
+			has_upstream
+			if [[ $? == 0 ]]
+			then
+				echo -e "This repo is upstreamed to: \n\t$upstream"
+			else
+				echo No upstream
+			fi
 			;;
 		s )
 			message=$OPTARG
 			;;
 		p )
-			echo "Publish to $OPTARG"
-			# Throw error and exit if origin already exists
-			# OPTARG must be "gitlab", "github", or "all"
+			is_published
+			if [[ $? == 0 ]]
+			then
+				echo "This repo is already published to $origin_service"
+				exit 1
+			fi
+
+			if [[ $OPTARG != "gitlab" && $OPTARG != "github" ]]
+			then
+				echo Error: argument to p must either be \"gitlab\" or \"github\"
+				exit 2
+			fi
+
+			echo Publishing to git@$OPTARG.com:scbrickley/"$name".git
+			publish $OPTARG
 			;;
 		m )
 			echo "Mirror to $OPTARG"
 			# Throw error and exit if not published
 			# Throw error and exit if already mirrored
-			;;
-		n )
-			echo "Name: $OPTARG"
-			# If name is not provided, set name to dir
+			# Throw error and exit if OPTARG != "github" or "gitlab"
 			;;
 		\? )
 			echo "Invalid option: $OPTARG" 1>&2

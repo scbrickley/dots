@@ -54,16 +54,25 @@ publish() {
 }
 
 mirror() {
-	create_gh
-	git remote add ghm git@github.com:scbrickley/"$name".git
-	git add .
+	if [[ $1 == "github" ]]
+	then
+		create_gh
+	fi
+	git remote add mirror git@$1.com:scbrickley/$name.git
+	git add $git_root/*
 	git commit -m "Mirror to $mirror_service"
 	git push -u mirror master
+	git push -u origin master
 }	
 
 is_published() {
 	count=$(git remote -v | grep -c origin)
 	[[ $count -gt 0 ]]
+}
+
+is_mirrored() {
+	count=$(git remote -v | grep -v "origin" | grep -vc "upstream")
+	[[ $count != 0 ]]
 }
 
 list_remotes() {
@@ -90,7 +99,7 @@ has_upstream() {
 
 
 ########################### Argument parsing ###########################
-while getopts ":lubs:p:m:" opt
+while getopts ":lubms:p:" opt
 do
 	case ${opt} in
 		l )
@@ -115,7 +124,23 @@ do
 			fi
 			;;
 		s )
-			message=$OPTARG
+			git add $git_root/*
+			git commit -m "$OPTARG"
+			
+			is_published
+			if [[ $? != 0 ]]
+			then
+				echo "This repo is not yet published. Please publish before attempting to save."
+				exit 6
+			fi
+
+			git push origin master
+			
+			is_mirrored
+			if [[ $? == 0 ]]
+			then
+				git push mirror master
+			fi
 			;;
 		p )
 			is_published
@@ -127,18 +152,41 @@ do
 
 			if [[ $OPTARG != "gitlab" && $OPTARG != "github" ]]
 			then
-				echo Error: argument to p must either be \"gitlab\" or \"github\"
+				echo "Error: argument to p must either be \"gitlab\" or \"github\""
 				exit 2
 			fi
 
-			echo Publishing to git@$OPTARG.com:scbrickley/"$name".git
+			echo "Publishing to git@$OPTARG.com:scbrickley/$name.git"
 			publish $OPTARG
 			;;
 		m )
-			echo "Mirror to $OPTARG"
 			# Throw error and exit if not published
-			# Throw error and exit if already mirrored
-			# Throw error and exit if OPTARG != "github" or "gitlab"
+			is_published
+			if [[ $? != 0 ]]
+			then
+				echo "This repo has not yet been published. Please publish before attempting to mirror."
+				exit 4
+			fi
+
+			is_mirrored
+			if [[ $? == 0 ]]
+			then
+				echo "This repo has already been mirrored"
+				exit 5
+			fi
+
+			if [[ $origin_service == "gitlab" ]]
+			then
+				mirror_service="github"
+			elif [[ $origin_service == "github" ]]
+			then
+				mirror_service="gitlab"
+			else
+				echo "Origin service not recognized. Should be 'gitlab' or 'github'. Uncertain where to mirror."
+				exit 6
+			fi
+
+			mirror $mirror_service
 			;;
 		\? )
 			echo "Invalid option: $OPTARG" 1>&2

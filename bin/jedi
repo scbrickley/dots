@@ -28,7 +28,7 @@ upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url 
 ########################### Function Declarations ###########################
 gh_pass() {
 	read -resp $'Tell me your secrets:\n' kpw
-	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 2 &> /dev/null &
+	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 5 &> /dev/null &
 	sleep 0.5s
 	ghpw=$(xclip -o -selection clipboard)
 	echo $ghpw

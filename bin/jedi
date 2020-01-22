@@ -58,7 +58,7 @@ mirror() {
 	then
 		create_gh
 	fi
-	git remote add mirror git@$1.com:scbrickley/$name.git
+	git remote add mirror git@"$1".com:scbrickley/"$name".git
 	git add $git_root/*
 	git commit -m "Mirror to $mirror_service"
 	git push -u mirror master

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-dir=${PWD##*/}
-
-hub create $dir
-
-git remote add github git@github.com:scbrickley/"$dir".git
-
-git push -u github master

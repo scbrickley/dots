@@ -1,31 +1,33 @@
 #!/bin/bash
 
-########################### Check if there's a .git directory ###########################
-git rev-parse --show-toplevel &> /dev/null
-if [[ $? != 0 ]]
-then
-	echo -ne "This project does not have a .git directory.\n"
-	read -resp $'Would you like to initialize the current directory as a git repo? [y/N]\n' answer
-	if [[ $answer == y || $answer == yes || $answer == Yes ]]
-	then
-		git init
+git_init() {
+	git rev-parse --show-toplevel &> /dev/null
+	if [[ $? != 0 ]]; then
+		find */.git &> /dev/null
+		if [[ $? != 0 ]]; then
+			echo -ne "This project does not have a .git directory.\n"
+			read -resp $'Would you like to initialize the current directory as a git repo? [y/N]\n' answer
+			if [[ $answer == y || $answer == yes || $answer == Yes ]]; then
+				git init
+			else
+				exit 1
+			fi
+		else
+			echo "This directory contains other git repositories. Nesting repos is not allowed. Aborting."
+			exit 1
+		fi
 	else
-		exit 3
+		git_root=$(git rev-parse --show-toplevel)
+
+		name=${git_root##*/}
+
+		origin_service=$(grep -A 1 -m 1 'remote "origin"' $git_root/.git/config | grep url | xargs \
+			| sed 's/url = git@//g' | grep -o 'git.\{3\}')
+
+		upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url | xargs | sed 's/url = //g')
 	fi
-fi
+}
 
-########################### Variable Declarations ###########################
-git_root=$(git rev-parse --show-toplevel)
-
-name=${git_root##*/}
-
-origin_service=$(grep -A 1 -m 1 'remote "origin"' $git_root/.git/config | grep url | xargs \
-	| sed 's/url = git@//g' | grep -o 'git.\{3\}')
-
-upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url | xargs | sed 's/url = //g')
-
-
-########################### Function Declarations ###########################
 gh_pass() {
 	read -resp $'Tell me your secrets:\n' kpw
 	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 5 &> /dev/null &
@@ -99,13 +101,15 @@ has_upstream() {
 
 
 ########################### Argument parsing ###########################
-while getopts ":lubms:p:" opt
+while getopts ":lubms:p:g:" opt
 do
 	case ${opt} in
 		l )
+			git_init
 			list_remotes
 			;;
 		b )
+			git_init
 			is_published
 			if [[ $? == 0 ]]
 			then
@@ -115,6 +119,7 @@ do
 			fi
 			;;
 		u )
+			git_init
 			has_upstream
 			if [[ $? == 0 ]]
 			then
@@ -124,6 +129,7 @@ do
 			fi
 			;;
 		s )
+			git_init	
 			git add $git_root/*
 			git commit -m "$OPTARG"
 			
@@ -131,7 +137,7 @@ do
 			if [[ $? != 0 ]]
 			then
 				echo "This repo is not yet published. Please publish before attempting to save."
-				exit 6
+				exit 1
 			fi
 
 			git push origin master
@@ -143,6 +149,7 @@ do
 			fi
 			;;
 		p )
+			git_init
 			is_published
 			if [[ $? == 0 ]]
 			then
@@ -153,26 +160,26 @@ do
 			if [[ $OPTARG != "gitlab" && $OPTARG != "github" ]]
 			then
 				echo "Error: argument to p must either be \"gitlab\" or \"github\""
-				exit 2
+				exit 1
 			fi
 
 			echo "Publishing to git@$OPTARG.com:scbrickley/$name.git"
 			publish $OPTARG
 			;;
 		m )
-			# Throw error and exit if not published
+			git_init
 			is_published
 			if [[ $? != 0 ]]
 			then
 				echo "This repo has not yet been published. Please publish before attempting to mirror."
-				exit 4
+				exit 1
 			fi
 
 			is_mirrored
 			if [[ $? == 0 ]]
 			then
 				echo "This repo has already been mirrored"
-				exit 5
+				exit 1
 			fi
 
 			if [[ $origin_service == "gitlab" ]]
@@ -183,16 +190,32 @@ do
 				mirror_service="gitlab"
 			else
 				echo "Origin service not recognized. Should be 'gitlab' or 'github'. Uncertain where to mirror."
-				exit 6
+				exit 16
 			fi
 
 			mirror $mirror_service
 			;;
+		g )
+			echo "Searching for a remote project named $OPTARG..."
+			git clone git@gitlab.com:scbrickley/$OPTARG &> /dev/null
+			if [[ $? != 0 ]]
+			then
+				echo "No project with the name $OPTARG found on GitLab. Trying GitHub..."
+				git clone git@github.com:scbrickley/$OPTARG &> /dev/null
+				if [[ $? != 0 ]]
+				then
+					echo "Could not find a project with the name \"$OPTARG\"."
+					exit 1
+				fi
+			fi
+			;;
 		\? )
 			echo "Invalid option: $OPTARG" 1>&2
+			exit 1
 			;;
 		: )
 			echo "$OPTARG requires an argument" 1>&2
+			exit 1
 			;;
 	esac
 done

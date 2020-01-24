@@ -16,16 +16,16 @@ git_init() {
 			echo "This directory contains other git repositories. Nesting repos is not allowed. Aborting."
 			exit 1
 		fi
-	else
-		git_root=$(git rev-parse --show-toplevel)
-
-		name=${git_root##*/}
-
-		origin_service=$(grep -A 1 -m 1 'remote "origin"' $git_root/.git/config | grep url | xargs \
-			| sed 's/url = git@//g' | grep -o 'git.\{3\}')
-
-		upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url | xargs | sed 's/url = //g')
 	fi
+	declare -g git_root=$(git rev-parse --show-toplevel)
+
+	declare -g name=${git_root##*/}
+
+	declare -g origin_service=$(grep -A 1 -m 1 'remote "origin"' $git_root/.git/config | grep url | xargs \
+		| sed 's/url = git@//g' | grep -o 'git.\{3\}')
+
+	declare -g upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url | xargs \
+	| sed 's/url = //g')
 }
 
 gh_pass() {
@@ -163,7 +163,7 @@ do
 				exit 1
 			fi
 
-			echo "Publishing to git@$OPTARG.com:scbrickley/$name.git"
+			echo Publishing to git@$OPTARG.com:scbrickley/"$name".git
 			publish $OPTARG
 			;;
 		m )

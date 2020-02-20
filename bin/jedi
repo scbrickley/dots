@@ -99,11 +99,19 @@ has_upstream() {
 	[[ $count -gt 0 ]]
 }
 
+current_branch() {
+	echo $(git rev-parse --abbrev-ref HEAD)
+}
+
 
 ########################### Argument parsing ###########################
-while getopts ":lubms:p:g:" opt
+while getopts ":lubmrs:p:g:" opt
 do
 	case ${opt} in
+		r )
+			git_init
+			current_branch
+			;;
 		l )
 			git_init
 			list_remotes
@@ -132,7 +140,7 @@ do
 			git_init	
 			git add $git_root/*
 			git commit -m "$OPTARG"
-			
+
 			is_published
 			if [[ $? != 0 ]]
 			then
@@ -140,12 +148,12 @@ do
 				exit 1
 			fi
 
-			git push origin master
+			git push origin $current_branch
 			
 			is_mirrored
 			if [[ $? == 0 ]]
 			then
-				git push mirror master
+				git push mirror $current_branch
 			fi
 			;;
 		p )

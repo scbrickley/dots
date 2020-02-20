@@ -138,7 +138,7 @@ do
 			;;
 		s )
 			git_init	
-			git add $git_root/*
+			git add $git_root
 			git commit -m "$OPTARG"
 
 			is_published

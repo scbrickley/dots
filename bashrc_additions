@@ -11,3 +11,4 @@ export VISUAL="/usr/bin/vim"
 set -o vi
 
 export TERM="screen-256color"
+source $HOME/.profile

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+while true;
+do
+	clear
+	now=$(date +%r)
+	echo $now | figlet -f future
+	sleep 1
+done

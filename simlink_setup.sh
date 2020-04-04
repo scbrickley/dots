@@ -21,3 +21,7 @@ ls -l $HOME/.muttrc
 rm $HOME/.aliases
 ln -s $(pwd)/aliases $HOME/.aliases
 ls -l $HOME/.aliases
+
+rm $HOME/.alacritty.yml
+ln -s $(pwd)/alacritty.yml $HOME/.alacritty.yml
+ls -l $HOME/.alacritty.yml

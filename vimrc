@@ -22,6 +22,7 @@ call plug#end()
 let mapleader = "\\"
 
 let g:rust_recommended_style = 0
+let g:rainbow_active = 1
 
 set nocompatible
 set noeb vb t_vb=

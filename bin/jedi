@@ -6,14 +6,16 @@ git_init() {
 		find */.git &> /dev/null
 		if [[ $? != 0 ]]; then
 			echo -ne "This project does not have a .git directory.\n"
-			read -resp $'Would you like to initialize the current directory as a git repo? [y/N]\n' answer
+			read -resp $'Would you like to make this directory a git repo? [y/N]\n' \
+				answer
 			if [[ $answer == y || $answer == yes || $answer == Yes ]]; then
 				git init
 			else
 				exit 1
 			fi
 		else
-			echo "This directory contains other git repositories. Nesting repos is not allowed. Aborting."
+			echo "This directory contains other git repositories."
+			echo "Nesting repos is not allowed. Aborting."
 			exit 1
 		fi
 	fi
@@ -21,11 +23,13 @@ git_init() {
 
 	declare -g name=${git_root##*/}
 
-	declare -g origin_service=$(grep -A 1 -m 1 'remote "origin"' $git_root/.git/config | grep url | xargs \
+	declare -g origin_service=$(grep -A 1 -m 1 'remote "origin"' \
+		$git_root/.git/config | grep url | xargs \
 		| sed 's/url = git@//g' | grep -o 'git.\{3\}')
 
-	declare -g upstream=$(cat $git_root/.git/config | grep -A 1 'remote "upstream"' | grep url | xargs \
-	| sed 's/url = //g')
+	declare -g upstream=$(cat $git_root/.git/config | grep -A 1 \
+		'remote "upstream"' | grep url | xargs \
+		| sed 's/url = //g')
 }
 
 gh_pass() {
@@ -39,7 +43,8 @@ gh_pass() {
 
 create_gh() {
 	ghpw=$(gh_pass)
-	curl -X POST https://api.github.com/user/repos -u scbrickley:$ghpw -d "{\"name\": \"$name\"}" &> /dev/null
+	curl -X POST https://api.github.com/user/repos -u scbrickley:$ghpw \
+		-d "{\"name\": \"$name\"}" &> /dev/null
 	unset ghpw
 }
 
@@ -144,7 +149,8 @@ do
 			is_published
 			if [[ $? != 0 ]]
 			then
-				echo "This repo is not yet published. Please publish before attempting to save."
+				echo "This repo is not yet published."
+				echo "Please publish before attempting to save."
 				exit 1
 			fi
 
@@ -179,7 +185,8 @@ do
 			is_published
 			if [[ $? != 0 ]]
 			then
-				echo "This repo has not yet been published. Please publish before attempting to mirror."
+				echo "This repo has not yet been published."
+				echo "Please publish before attempting to mirror."
 				exit 1
 			fi
 
@@ -197,7 +204,8 @@ do
 			then
 				mirror_service="gitlab"
 			else
-				echo "Origin service not recognized. Should be 'gitlab' or 'github'. Uncertain where to mirror."
+				echo "Origin service not recognized. Should be 'gitlab' or 'github'."
+				echo "Uncertain where to mirror."
 				exit 16
 			fi
 
@@ -208,7 +216,8 @@ do
 			git clone git@gitlab.com:scbrickley/$OPTARG &> /dev/null
 			if [[ $? != 0 ]]
 			then
-				echo "No project with the name $OPTARG found on GitLab. Trying GitHub..."
+				echo "No project with the name $OPTARG found on GitLab."
+				echo "Trying GitHub..."
 				git clone git@github.com:scbrickley/$OPTARG &> /dev/null
 				if [[ $? != 0 ]]
 				then

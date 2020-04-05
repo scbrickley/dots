@@ -12,6 +12,8 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'tpope/vim-surround'
 	Plug 'terryma/vim-multiple-cursors'
 	Plug 'junegunn/goyo.vim'
+	Plug 'frazrepo/vim-rainbow'
+	Plug 'airblade/vim-gitgutter'
 call plug#end()
 " Vim-Plug config end
 

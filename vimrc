@@ -15,7 +15,7 @@ call plug#begin(expand('~/.vim/plugged'))
 call plug#end()
 " Vim-Plug config end
 
-colorscheme nord
+"colorscheme nord
 
 let mapleader = "\\"
 

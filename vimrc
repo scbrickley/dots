@@ -17,12 +17,15 @@ call plug#begin(expand('~/.vim/plugged'))
 call plug#end()
 " Vim-Plug config end
 
-"colorscheme nord
-
 let mapleader = "\\"
 
 let g:rust_recommended_style = 0
 let g:rainbow_active = 1
+
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = "left"
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCommentEmptyLines = 1
 
 set nocompatible
 set noeb vb t_vb=

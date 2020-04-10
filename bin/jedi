@@ -11,7 +11,7 @@ git_init() {
 			if [[ $answer == y || $answer == yes || $answer == Yes ]]; then
 				git init
 			else
-				exit 1
+				exit 0
 			fi
 		else
 			echo "This directory contains other git repositories."

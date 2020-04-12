@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [[ -n "$1" ]]; then
+	cat $HOME/.tok/"$1" | xargs
+fi

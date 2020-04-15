@@ -1,0 +1,24 @@
+#!/bin/bash
+pacman -S \
+	git \
+	vim \
+	feh \
+	alacritty \
+	go \
+	inkscape \
+	gimp \
+	neomutt \
+
+pamac build \
+	firefox-nightly \
+	spotify \
+	gotop \
+
+git config --global user.name "Sean Brickley"
+git config --global user.email "sean@wabr.io"
+
+cat bashrc_additions >> $HOME/.bashrc
+cat profile_additions >> $HOME/.profile
+
+# Install Rust
+curl https://sh.rustup.rs -sSf | sh

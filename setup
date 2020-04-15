@@ -13,6 +13,9 @@ pamac build \
 	firefox-nightly \
 	spotify \
 	gotop \
+	zoom \
+	discord \
+	freetube \
 
 git config --global user.name "Sean Brickley"
 git config --global user.email "sean@wabr.io"

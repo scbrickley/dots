@@ -42,10 +42,9 @@ gh_pass() {
 }
 
 create_gh() {
-	ghpw=$(gh_pass)
-	curl -X POST https://api.github.com/user/repos -u scbrickley:$ghpw \
-		-d "{\"name\": \"$name\"}" &> /dev/null
-	unset ghpw
+	curl https://api.github.com/graphql \
+		-H "Authorization: scbrickley $(tok github)" \
+		-X POST -d "{createRpository(name: $name)"
 }
 
 

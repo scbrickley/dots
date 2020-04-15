@@ -8,6 +8,8 @@ pacman -S \
 	inkscape \
 	gimp \
 	neomutt \
+	figlet \
+	openssh \
 
 pamac build \
 	firefox-nightly \
@@ -16,12 +18,20 @@ pamac build \
 	zoom \
 	discord \
 	freetube \
+	ttf-iosevka \
+	toilet \
 
+# Configure git
 git config --global user.name "Sean Brickley"
 git config --global user.email "sean@wabr.io"
 
+# Add bash configurations to the end .bashrc and .profile
 cat bashrc_additions >> $HOME/.bashrc
 cat profile_additions >> $HOME/.profile
 
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh
+
+mkdir -p $HOME/code $HOME/go/src $HOME/go/bin
+
+ssh keygen -t rsa

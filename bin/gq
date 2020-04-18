@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cat "$2" &> /dev/null
-if [[ $? != 0 ]]; then
+if [ ! -f "$1" ]; then
 	declare -g query="$2"
 else
 	declare -g query=$(cat "$2" | xargs)

@@ -9,7 +9,6 @@ pacman -S \
 	gimp \
 	neomutt \
 	figlet \
-	openssh \
 
 pamac build \
 	firefox-nightly \
@@ -25,13 +24,37 @@ pamac build \
 git config --global user.name "Sean Brickley"
 git config --global user.email "sean@wabr.io"
 
-# Add bash configurations to the end .bashrc and .profile
-cat bashrc_additions >> $HOME/.bashrc
-cat profile_additions >> $HOME/.profile
-
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh
 
 mkdir -p $HOME/code $HOME/go/src $HOME/go/bin
 
 ssh keygen -t rsa
+
+rm $HOME/.tmux.conf
+ln -s $(pwd)/tmux_conf $HOME/.tmux.conf
+ls -l $HOME/.tmux.conf
+
+rm -r $HOME/.bin
+ln -s $(pwd)/bin $HOME/.bin
+ls -l $HOME/.bin
+
+rm $HOME/.config/gtk-3.0/gtk.css
+ln -s $(pwd)/gtk.css $HOME/.config/gtk-3.0/gtk.css
+ls -l $HOME/.config/gtk-3.0/gtk.css
+
+rm $HOME/.vimrc
+ln -s $(pwd)/vimrc $HOME/.vimrc
+ls -l $HOME/.vimrc
+
+rm $HOME/.aliases
+ln -s $(pwd)/aliases $HOME/.aliases
+ls -l $HOME/.aliases
+
+rm $HOME/.alacritty.yml
+ln -s $(pwd)/alacritty.yml $HOME/.alacritty.yml
+ls -l $HOME/.alacritty.yml
+
+rm $HOME/.bashrc
+ln -s $(pwd)/bashrc $HOME/.bashrc
+ls -l $HOME/.bashrc

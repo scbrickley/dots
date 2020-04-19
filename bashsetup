@@ -1,3 +1,0 @@
-rm $HOME/.bashrc
-ln -s $(pwd)/bashrc $HOME/.bashrc
-ls -l $HOME/.bashrc

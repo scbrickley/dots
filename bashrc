@@ -147,6 +147,8 @@ PS1='\[\033[01;33m\]\u@\h\[\033[01;37m\] \W\[\033[01;33m\]\[\033[00m\] '
 source $HOME/.aliases
 
 export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 export CDPATH=\
 ./:\

@@ -1,14 +1,12 @@
 #!/bin/bash
 pacman -S \
-	git \
-	vim \
 	feh \
 	alacritty \
 	go \
 	inkscape \
 	gimp \
-	neomutt \
 	figlet \
+	neofetch \
 
 pamac build \
 	firefox-nightly \

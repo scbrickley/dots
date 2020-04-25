@@ -164,3 +164,5 @@ set -o vi
 
 export TERM="screen-256color"
 source $HOME/.profile
+
+eval $(ssh-agent) &> /dev/null

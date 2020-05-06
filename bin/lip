@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ifconfig | rg -o 'inet 192\.\d{1,3}\.\d{1,3}\.\d{1,3}' | sed 's/inet //'
+ip addr | rg -o 'inet 192\.\d{1,3}\.\d{1,3}\.\d{1,3}' | sed 's/inet //'

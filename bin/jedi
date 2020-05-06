@@ -32,21 +32,30 @@ git_init() {
 		| sed 's/url = //g')
 }
 
-gh_pass() {
-	read -resp $'Tell me your secrets:\n' kpw
-	echo $kpw | keepassxc-cli clip $HOME/.kpxc/kpxc.kdbx GitHub 5 &> /dev/null &
-	sleep 0.5s
-	ghpw=$(xclip -o -selection clipboard)
-	echo $ghpw
-	unset ghpw
-}
-
 create_gh() {
-	curl https://api.github.com/graphql \
-		-H "Authorization: scbrickley $(tok github)" \
-		-X POST -d "{createRpository(name: $name)"
-}
+	query='
+		mutation {
+			createRepository(input: {
+				name: "'$name'"
+				visibility: PUBLIC
+			}) {
+				repository {
+					name
+				}
+			}
+		}
+	'
+	query=${query//\"/\\\"} # escape all the double quotes
+	query=${query//$'\n'/ } # force single line
+	query=${query//$'\t'/ } # remove tab characters
 
+	json='{"query": "'$query'"}'
+	echo "$json"
+
+	curl -H 'Content-Type: application/json' \
+			-H "Authorization: Bearer $(tok github)" \
+			-X POST -d "$json" "https://api.github.com/graphql"
+}
 
 publish() {
 	if [[ $1 == github ]]

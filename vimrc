@@ -5,6 +5,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall
 endif
 
+" Set different colorscheme when editing go files
+autocmd BufEnter *.go colorscheme nord
+
+" force vim to use same 16 colors as terminal
+set t_Co=16
+
 " Vim-Plug config start
 call plug#begin(expand('~/.vim/plugged'))
 	Plug 'preservim/nerdcommenter'
@@ -33,8 +39,6 @@ set noeb vb t_vb=
 syntax on
 
 set mouse=a
-
-set t_Co=16
 
 set spelllang=en_us
 set tabstop=2

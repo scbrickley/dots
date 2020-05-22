@@ -29,12 +29,12 @@ let g:rust_recommended_style = 0
 let g:rainbow_active = 1
 
 let g:rainbow_ctermfgs = [
+			\ 'blue',
 			\ 'black',
 			\ 'yellow',
 			\ 'Darkblue',
 			\ 'red',
 			\ 'magenta',
-			\ 'blue',
 			\ 'darkyellow',
 			\ 'gray',
 			\ 'darkgreen',

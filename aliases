@@ -1,6 +1,6 @@
 #!/bin/bash
 
-alias spec="clear; neofetch --ascii_colors 3 3 --colors 3 3 7 7 7 7"
+alias spec="clear; neofetch --ascii_colors 8 8 --colors 8 8 7 7 7 7"
 alias specs="clear; neofetch | lolcat -S 34"
 alias luna="curl wttr.in/moon"
 alias tks="tmux kill-server"

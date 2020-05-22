@@ -180,7 +180,7 @@ font:
   #use_thin_strokes: true
 
 # If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
+# draw_bold_text_with_bright_colors: true
 
 # Copyright (c) 2017-present Arctic Ice Studio <development@arcticicestudio.com>
 # Copyright (c) 2017-present Sven Greb <code@svengreb.de>
@@ -202,19 +202,19 @@ colors:
   normal:
     black: '0x3B4252'
     red: '0xBF616A'
-    green: '0xA3BE8C'
+    green: '0x83B98C'
     yellow: '0xEBCB8B'
     blue: '0x81A1C1'
-    magenta: '0xB48EAD'
+    magenta: '0x8888AD'
     cyan: '0x88C0D0'
     white: '0xE5E9F0'
   bright:
     black: '0x4C566A'
     red: '0xBF616A'
-    green: '0xA3BE8C'
-    yellow: '0xEBCB8B'
-    blue: '0x81A1C1'
-    magenta: '0xB48EAD'
+    green: '0x93B99C'
+    yellow: '0xEBCBAB'
+    blue: '0x7C869F'
+    magenta: '0x9488AD'
     cyan: '0x8FBCBB'
     white: '0xECEFF4'
 

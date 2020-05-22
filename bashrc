@@ -142,7 +142,7 @@ ex ()
 
 # better yaourt colors
 export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
-PS1='\[\033[01;33m\]\u@\h\[\033[01;37m\] \W\[\033[01;33m\]\[\033[00m\] '
+PS1='\[\033[01;30m\]\u@\h\[\033[01;37m\] \W\[\033[01;30m\]\[\033[00m\] '
 
 source $HOME/.aliases
 

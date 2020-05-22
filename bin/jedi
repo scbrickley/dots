@@ -50,7 +50,7 @@ create_gh() {
 	query=${query//$'\t'/ } # remove tab characters
 
 	json='{"query": "'$query'"}'
-	echo "$json"
+	# echo "$json" <-- for debugging purposes
 
 	curl -H 'Content-Type: application/json' \
 			-H "Authorization: Bearer $(tok github)" \

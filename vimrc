@@ -6,10 +6,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " Set different colorscheme when editing go files
-autocmd BufEnter *.go colorscheme nord
+colorscheme nord
 
 " force vim to use same 16 colors as terminal
-set t_Co=16
+" set t_Co=16
 
 " Vim-Plug config start
 call plug#begin(expand('~/.vim/plugged'))
@@ -28,6 +28,24 @@ let mapleader = "\\"
 let g:rust_recommended_style = 0
 let g:rainbow_active = 1
 
+let g:rainbow_ctermfgs = [
+			\ 'black',
+			\ 'yellow',
+			\ 'Darkblue',
+			\ 'red',
+			\ 'magenta',
+			\ 'blue',
+			\ 'darkyellow',
+			\ 'gray',
+			\ 'darkgreen',
+			\ 'darkcyan',
+			\ 'darkmagenta',
+			\ 'Darkblue',
+			\ 'darkgreen',
+			\ 'darkcyan',
+			\ 'red',
+			\ ]
+
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = "left"
 let g:NERDTrimTrailingWhitespace = 1
@@ -40,18 +58,22 @@ syntax on
 
 set mouse=a
 
+set number
 set spelllang=en_us
 set tabstop=2
 set shiftwidth=2
-set number relativenumber
 set autoindent
 set showmode
 set ttyfast
 
+hi MatchParen cterm=none ctermbg=black ctermfg=none
+
 " Toggle relative and absolute line numbers when switching in and out
 " of insert mode, and when switching focus
-augroup numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+
+" set number relativenumber
+" augroup numbertoggle
+"   autocmd!
+"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+" augroup END

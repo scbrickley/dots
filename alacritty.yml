@@ -215,7 +215,7 @@ colors:
     yellow: '0xEBCBAB'
     blue: '0x7C869F'
     magenta: '0x9488AD'
-    cyan: '0x8FBCBB'
+    cyan: '0xBBBBFF'
     white: '0xECEFF4'
 
 # Visual Bell

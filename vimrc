@@ -30,20 +30,14 @@ let g:rainbow_active = 1
 
 let g:rainbow_ctermfgs = [
 			\ 'blue',
-			\ 'black',
-			\ 'yellow',
-			\ 'Darkblue',
-			\ 'red',
-			\ 'magenta',
-			\ 'darkyellow',
-			\ 'gray',
-			\ 'darkgreen',
-			\ 'darkcyan',
 			\ 'darkmagenta',
-			\ 'Darkblue',
-			\ 'darkgreen',
-			\ 'darkcyan',
+			\ 'yellow',
+			\ 'black',
 			\ 'red',
+			\ 'green',
+			\ 'darkyellow',
+			\ 'cyan',
+			\ 'darkgreen',
 			\ ]
 
 let g:NERDSpaceDelims = 1

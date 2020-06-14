@@ -20,6 +20,8 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'junegunn/goyo.vim'
 	Plug 'frazrepo/vim-rainbow'
 	Plug 'airblade/vim-gitgutter'
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+	Plug 'rust-lang/rust.vim'
 call plug#end()
 " Vim-Plug config end
 
@@ -32,12 +34,12 @@ let g:rainbow_ctermfgs = [
 			\ 'blue',
 			\ 'darkmagenta',
 			\ 'yellow',
-			\ 'black',
 			\ 'red',
 			\ 'green',
 			\ 'darkyellow',
 			\ 'cyan',
 			\ 'darkgreen',
+			\ 'red',
 			\ ]
 
 let g:NERDSpaceDelims = 1

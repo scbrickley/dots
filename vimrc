@@ -16,19 +16,26 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'preservim/nerdcommenter'
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'tpope/vim-surround'
-	Plug 'terryma/vim-multiple-cursors'
-	Plug 'junegunn/goyo.vim'
 	Plug 'frazrepo/vim-rainbow'
 	Plug 'airblade/vim-gitgutter'
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+	Plug 'racer-rust/vim-racer'
 	Plug 'rust-lang/rust.vim'
 call plug#end()
 " Vim-Plug config end
 
 let mapleader = "\\"
 
-let g:rust_recommended_style = 0
 let g:rainbow_active = 1
+
+augroup Racer
+	autocmd!
+	autocmd FileType rust nmap <buffer> gd <Plug>(rust-def)
+augroup END
+
+let g:racer_cmd="$HOME/.cargo/bin/racer"
+
+let g:rust_recommended_style = 0
 
 let g:rainbow_ctermfgs = [
 			\ 'blue',
@@ -61,6 +68,11 @@ set shiftwidth=2
 set autoindent
 set showmode
 set ttyfast
+set nowrap
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set directory=~/.vim/swap
 
 hi MatchParen cterm=none ctermbg=black ctermfg=none
 

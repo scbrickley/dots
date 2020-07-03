@@ -4,6 +4,9 @@ pacman -S \
 	alacritty \
 	go \
 	inkscape \
+	fd \
+	fzf \
+	ripgrep \
 	gimp \
 	figlet \
 	neofetch \
@@ -18,13 +21,12 @@ pamac build \
 	ttf-iosevka \
 	toilet \
 
-# Configure git
-git config --global user.name "Sean Brickley"
-git config --global user.email "sean@wabr.io"
+./git_setup
 
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh
 
 mkdir -p $HOME/code $HOME/go/src $HOME/go/bin
+mkdir -p $HOME/.vim/swap $HOME/.vim/undodir $HOME/.vim/colors
 
 ssh keygen -t rsa

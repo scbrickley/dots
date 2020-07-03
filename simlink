@@ -25,3 +25,11 @@ ls -l $HOME/.alacritty.yml
 rm $HOME/.bashrc
 ln -s $(pwd)/bashrc $HOME/.bashrc
 ls -l $HOME/.bashrc
+
+rm $HOME/.funcs
+ln -s $(pwd)/funcs $HOME/.funcs
+ls -l $HOME/.funcs
+
+rm $HOME/.vim/colors/nord.vim
+ln -s $(pwd)/nord.vim $HOME/.vim/colors/nord.vim
+ls -l $HOME/.vim/colors/nord.vim

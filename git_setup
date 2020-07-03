@@ -1,0 +1,3 @@
+git config --global user.name "Sean Brickley"
+git config --global user.email "sean@wabr.io"
+git config --global push.default current

@@ -146,6 +146,7 @@ export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1
 PS1='\[\033[01;37m\] \W\[\033[01;35m\] λ\[\033[00m\] '
 
 source $HOME/.aliases
+source $HOME/.funcs
 
 export PATH="$PATH:$HOME/.bin"
 export PATH="$PATH:$HOME/go/bin"

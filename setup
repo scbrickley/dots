@@ -1,25 +1,43 @@
 #!/bin/bash
 pacman -S \
-	feh \
-	alacritty \
-	go \
-	inkscape \
-	fd \
-	fzf \
-	ripgrep \
-	gimp \
-	figlet \
-	neofetch \
+	alacritty
+	blender
+	blueman
+	bluez-utils
+	cabal-install
+	docker
+	fd
+	feh
+	figlet
+	gimp
+	go
+	inkscape
+	jq
+	keepassxc
+	lolcat
+	neofetch
+	npm
+	obs-studio
+	pandoc
+	qbittorrent
+	ripgrep
+	tmux
+	tree
+	vim
+	virtualbox
+	wget
+	wine
+	xclip
 
 pamac build \
-	firefox-nightly \
-	spotify \
-	gotop \
-	zoom \
-	discord \
-	freetube \
-	ttf-iosevka \
-	toilet \
+	firefox-nightly
+	freetube-bin
+	pipes.sh
+	slack-desktop
+	spotify
+	toilet
+	ttf-iosevka
+	zoom
 
 ./git_setup
 

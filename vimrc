@@ -8,9 +8,6 @@ endif
 " Set different colorscheme when editing go files
 colorscheme nord
 
-" force vim to use same 16 colors as terminal
-" set t_Co=16
-
 " Vim-Plug config start
 call plug#begin(expand('~/.vim/plugged'))
 	Plug 'preservim/nerdcommenter'
@@ -21,6 +18,7 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 	Plug 'racer-rust/vim-racer'
 	Plug 'rust-lang/rust.vim'
+	Plug 'haya14busa/is.vim'
 call plug#end()
 " Vim-Plug config end
 
@@ -38,6 +36,7 @@ let g:racer_cmd="$HOME/.cargo/bin/racer"
 let g:rust_recommended_style = 0
 
 let g:rainbow_ctermfgs = [
+			\ 'black',
 			\ 'blue',
 			\ 'darkmagenta',
 			\ 'yellow',
@@ -72,9 +71,18 @@ set nowrap
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
+set hlsearch
 set directory=~/.vim/swap
 
 hi MatchParen cterm=none ctermbg=black ctermfg=none
+hi Search cterm=none ctermbg=black ctermfg=white
+hi IncSearch cterm=none ctermbg=3 ctermfg=black
+
+nnoremap <Leader>r * :%s///g<Left><Left>
+nnoremap <Leader>rc * :%s///gc<Left><Left><Left>
+
+xnoremap <Leader>r :s///g<Left><Left>
+xnoremap <Leader>rc :s///gc<Left><Left><Left>
 
 " Toggle relative and absolute line numbers when switching in and out
 " of insert mode, and when switching focus

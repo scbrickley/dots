@@ -24,7 +24,7 @@ function gzv() {
 	[[ $? != 0 ]] && return
 	[[ -z "$git_root" ]] || cd $git_root
 	file=$(fzf)
-	[[ -z "$dir" ]] && cd $start || vim $file 
+	[[ -z "$file" ]] && cd $start || vim $file 
 }
 
 function gd() {

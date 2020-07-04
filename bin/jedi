@@ -221,12 +221,12 @@ do
 			;;
 		g )
 			echo "Searching for a remote project named $OPTARG..."
-			git clone git@gitlab.com:scbrickley/$OPTARG &> /dev/null
+			git clone git@gitlab.com:scbrickley/$OPTARG.git &> /dev/null
 			if [[ $? != 0 ]]
 			then
 				echo "No project with the name $OPTARG found on GitLab."
 				echo "Trying GitHub..."
-				git clone git@github.com:scbrickley/$OPTARG &> /dev/null
+				git clone git@github.com:scbrickley/$OPTARG.git &> /dev/null
 				if [[ $? != 0 ]]
 				then
 					echo "Could not find a project with the name \"$OPTARG\"."

@@ -1,50 +1,51 @@
 #!/bin/bash
+
+mkdir -p $HOME/code $HOME/go/src $HOME/go/bin
+mkdir -p $HOME/.vim/swap $HOME/.vim/undodir $HOME/.vim/colors
+
 pacman -S \
-	alacritty
-	blender
-	blueman
-	bluez-utils
-	cabal-install
-	docker
-	fd
-	feh
-	figlet
-	gimp
-	go
-	inkscape
-	jq
-	keepassxc
-	lolcat
-	neofetch
-	npm
-	obs-studio
-	pandoc
-	qbittorrent
-	ripgrep
-	tmux
-	tree
-	vim
-	virtualbox
-	wget
-	wine
-	xclip
+	alacritty \
+	blender \
+	blueman \
+	bluez-utils \
+	cabal-install \
+	docker \
+	fd \
+	feh \
+	figlet \
+	gimp \
+	go \
+	inkscape \
+	jq \
+	keepassxc \
+	lolcat \
+	neofetch \
+	npm \
+	obs-studio \
+	pandoc \
+	qbittorrent \
+	ripgrep \
+	tmux \
+	tree \
+	vim \
+	virtualbox \
+	wget \
+	wine \
+	xclip \
 
 pamac build \
-	firefox-nightly
-	freetube-bin
-	pipes.sh
-	slack-desktop
-	spotify
-	toilet
-	ttf-iosevka
-	zoom
+	firefox-nightly \
+	freetube-bin \
+	pipes.sh \
+	slack-desktop \
+	spotify \
+	toilet \
+	ttf-iosevka \
+	zoom \
 
 ./git_setup
 
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh
 
-mkdir -p $HOME/code $HOME/go/src $HOME/go/bin
-mkdir -p $HOME/.vim/swap $HOME/.vim/undodir $HOME/.vim/colors
-
-ssh keygen -t rsa
+./simlink

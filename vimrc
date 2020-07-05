@@ -19,6 +19,7 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'racer-rust/vim-racer'
 	Plug 'rust-lang/rust.vim'
 	Plug 'haya14busa/is.vim'
+	Plug 'junegunn/fzf.vim'
 call plug#end()
 " Vim-Plug config end
 

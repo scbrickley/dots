@@ -7,7 +7,8 @@ function zd() {
 
 function zv() {
 	file=$(fzf)
-	[[ -z "$file" ]] || vim $file
+	dir="${file%/*}"
+	[[ -z "$file" ]] || cd $dir && vim $(basename $file) 
 }
 
 function gzd() {
@@ -24,7 +25,8 @@ function gzv() {
 	[[ $? != 0 ]] && return
 	[[ -z "$git_root" ]] || cd $git_root
 	file=$(fzf)
-	[[ -z "$file" ]] && cd $start || vim $file 
+	dir="${file%/*}"
+	[[ -z "$file" ]] && cd $start || cd $dir && vim $(basename $file) 
 }
 
 function gd() {

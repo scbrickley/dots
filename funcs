@@ -7,8 +7,9 @@ function zd() {
 
 function zv() {
 	file=$(fzf)
+	[[ -z "$file" ]] && return
 	dir="${file%/*}"
-	[[ -z "$file" ]] || cd $dir && vim $(basename $file) 
+	cd $dir && vim $(basename $file) 
 }
 
 function gzd() {
@@ -24,9 +25,10 @@ function gzv() {
 	git_root=$(git rev-parse --show-toplevel) 
 	[[ $? != 0 ]] && return
 	[[ -z "$git_root" ]] || cd $git_root
-	file=$(fzf)
+	file=$(git ls-files | fzf)
+	[[ -z "$file" ]] && cd $start && return
 	dir="${file%/*}"
-	[[ -z "$file" ]] && cd $start || cd $dir && vim $(basename $file) 
+	cd $dir && vim $(basename $file) 
 }
 
 function gd() {

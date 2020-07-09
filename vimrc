@@ -20,6 +20,7 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'rust-lang/rust.vim'
 	Plug 'haya14busa/is.vim'
 	Plug 'junegunn/fzf.vim'
+	Plug 'rhysd/rust-doc.vim'
 call plug#end()
 " Vim-Plug config end
 
@@ -53,6 +54,10 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = "left"
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDCommentEmptyLines = 1
+
+nnoremap <Leader>f :Files<Enter>
+nnoremap <Leader>gf :GFiles<Enter>
+nnoremap <Leader>rg :Rg<Enter>
 
 set nocompatible
 set noeb vb t_vb=

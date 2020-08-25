@@ -5,7 +5,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall
 endif
 
-" Set different colorscheme when editing go files
 colorscheme nord
 
 " Vim-Plug config start
@@ -55,6 +54,8 @@ let g:NERDDefaultAlign = "left"
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDCommentEmptyLines = 1
 
+let g:go_fmt_command = "goimports"
+
 nnoremap <Leader>f :Files<Enter>
 nnoremap <Leader>gf :GFiles<Enter>
 nnoremap <Leader>rg :Rg<Enter>
@@ -81,8 +82,9 @@ set hlsearch
 set directory=~/.vim/swap
 
 hi MatchParen cterm=none ctermbg=black ctermfg=none
-hi Search cterm=none ctermbg=black ctermfg=white
+hi Search cterm=none ctermbg=darkgreen ctermfg=black
 hi IncSearch cterm=none ctermbg=3 ctermfg=black
+hi Visual cterm=none ctermbg=3 ctermfg=black
 
 nnoremap <Leader>r * :%s///g<Left><Left>
 nnoremap <Leader>rc * :%s///gc<Left><Left><Left>
@@ -90,12 +92,12 @@ nnoremap <Leader>rc * :%s///gc<Left><Left><Left>
 xnoremap <Leader>r :s///g<Left><Left>
 xnoremap <Leader>rc :s///gc<Left><Left><Left>
 
-" Toggle relative and absolute line numbers when switching in and out
-" of insert mode, and when switching focus
+nnoremap <Leader>p :echo expand('%p')<Enter>
 
-" set number relativenumber
-" augroup numbertoggle
-"   autocmd!
-"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-" augroup END
+" Copy, Cut, and Paste to/from the system clipboard register
+xnoremap <Leader>c "+y
+xnoremap <Leader>x "+d
+nnoremap <Leader>v "+p
+
+
+nnoremap <Leader>rt gg=G<C-o><C-o>

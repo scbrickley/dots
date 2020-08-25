@@ -1,17 +1,23 @@
 #!/bin/bash
 
-alias spec="clear; neofetch --ascii_colors 8 8 --colors 8 8 7 7 7 7"
-alias specs="clear; neofetch | lolcat -S 34"
-alias luna="curl wttr.in/moon"
-alias tks="tmux kill-server"
-alias copy="xclip -selection clipboard"
-alias paste="xclip -o"
-alias open="xdg-open"
-alias pipes="pipes.sh -p 8"
-alias path="echo $PATH | sed 's/:/\n/g' | sort | uniq"
-alias games="steam &> /dev/null &"
-alias tunes="spotify &> /dev/null &"
-alias yeet="rm -rf"
-alias stat="ytop -p"
-alias vpn="sudo protonvpn c -p UDP"
-alias slide="feh -rzFD 3"
+alias clear='clear && printf "\033[3J"'
+alias spec='clear; neofetch --ascii_colors 8 8 --colors 8 8 7 7 7 7'
+alias specs='clear; neofetch | lolcat -S 34'
+alias luna='curl wttr.in/moon'
+alias tks='tmux kill-server'
+alias copy='xclip -selection clipboard'
+alias paste='xclip -o'
+alias open='xdg-open'
+alias pipes='pipes.sh -p 8'
+alias path='echo $PATH | sed 's/:/\n/g' | sort | uniq'
+alias games='steam &> /dev/null &'
+alias tunes='spotify &> /dev/null &'
+alias yeet='rm -rf'
+alias stat='ytop -p'
+alias vpn='sudo protonvpn c -p UDP'
+alias slide='feh -rzFD 3'
+alias rg='rg --colors line:fg:blue \
+	--colors match:bg:green \
+	--colors match:fg:black \
+	--colors path:bg:yellow \
+	--colors path:fg:black'

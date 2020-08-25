@@ -35,3 +35,7 @@ function gd() {
 	git_root=$(git rev-parse --show-toplevel)
 	[[ -z "$git_root" ]] || cd $git_root
 }
+
+function pz() {
+	ps aux | fzf
+}

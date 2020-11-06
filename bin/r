@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [[ $# > 0 ]]; then
-	xdg-open "https://old.reddit.com/r/$@" &> /dev/null &
-else
-	xdg-open "https://old.reddit.com" &> /dev/null &
-fi

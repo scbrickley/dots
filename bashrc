@@ -148,9 +148,11 @@ PS1='\[\033[01;37m\] \W\[\033[01;35m\] λ\[\033[00m\] '
 source $HOME/.aliases
 source $HOME/.funcs
 
-export PATH="$PATH:$HOME/.bin"
-export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$HOME/.bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH="$HOME/go"
 
 export CDPATH=\
 ./:\

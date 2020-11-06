@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [ ! -f "$1" ]; then
-	declare -g query="$2"
-else
-	declare -g query=$(cat "$2" | xargs)
-fi
-
-curl $1 -H 'Content-Type: application/graphql' -d "$query"

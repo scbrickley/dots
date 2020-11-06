@@ -20,6 +20,7 @@ call plug#begin(expand('~/.vim/plugged'))
 	Plug 'haya14busa/is.vim'
 	Plug 'junegunn/fzf.vim'
 	Plug 'rhysd/rust-doc.vim'
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 " Vim-Plug config end
 
@@ -37,7 +38,6 @@ let g:racer_cmd="$HOME/.cargo/bin/racer"
 let g:rust_recommended_style = 0
 
 let g:rainbow_ctermfgs = [
-			\ 'black',
 			\ 'blue',
 			\ 'darkmagenta',
 			\ 'yellow',
@@ -71,6 +71,7 @@ set number
 set spelllang=en_us
 set tabstop=2
 set shiftwidth=2
+set noexpandtab
 set autoindent
 set showmode
 set ttyfast
@@ -101,3 +102,22 @@ nnoremap <Leader>v "+p
 
 
 nnoremap <Leader>rt gg=G<C-o><C-o>
+
+" Flux file type
+au BufRead,BufNewFile *.flux		set filetype=flux
+
+nnoremap ;j :m .+1<CR>==
+nnoremap ;k :m .-2<CR>==
+vnoremap ;j :m '>+1<CR>gv=gv
+vnoremap ;k :m '<-2<CR>gv=gv
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_fmt_fail_silently = 1
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')

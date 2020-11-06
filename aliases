@@ -9,13 +9,9 @@ alias copy='xclip -selection clipboard'
 alias paste='xclip -o'
 alias open='xdg-open'
 alias pipes='pipes.sh -p 8'
-alias path='echo $PATH | sed 's/:/\n/g' | sort | uniq'
-alias games='steam &> /dev/null &'
-alias tunes='spotify &> /dev/null &'
-alias yeet='rm -rf'
+alias path='echo $PATH | sed "s/:/\n/g" | sort | uniq'
+alias paths='echo $PATH | sed "s/:/\n/g" | sort'
 alias stat='ytop -p'
-alias vpn='sudo protonvpn c -p UDP'
-alias slide='feh -rzFD 3'
 alias rg='rg --colors line:fg:blue \
 	--colors match:bg:green \
 	--colors match:fg:black \
